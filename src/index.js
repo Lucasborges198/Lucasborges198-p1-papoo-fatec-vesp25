@@ -12,7 +12,6 @@ const q = process.env.q
 const BASE_URL3 = process.env.BASE_URL3
 const PROTOCOL3 = process.env.PROTOCOL3
 const API_NEWS_KEY = process.env.API_NEWS_KEY
-// params endpoint 1
 
 const URL = `${PROTOCOL1}://${BASE_URL1}?q=${q}&appid=${APP_KEY}`
 
@@ -25,6 +24,7 @@ function LatLong() {
     response.then((response) => {
       const lat = response.data[0].lat;
       const lon = response.data[0].lon;
+      console.log(lat, lon);
       req({ lat, lon });
     })
       .catch((err) => {
@@ -36,7 +36,6 @@ function LatLong() {
 LatLong().then((response) => {
   const lat = response.lat;
   const lon = response.lon;
-  // params endpoint 2
   const URL2 = `${PROTOCOL2}://${BASE_URL2}?lat=${lat}&lon=${lon}&appid=${APP_KEY}`
 
   const promiseResultante2 = axios.get(URL2);
@@ -45,6 +44,7 @@ LatLong().then((response) => {
     return new Promise((req, res) => {
       const response = promiseResultante2;
       response.then((response) => {
+        console.log(response.data.main.feels_like, response.data.weather[0].description);
         req([response.data.main.feels_like, response.data.weather[0].description]);
       })
         .catch((err) => {
